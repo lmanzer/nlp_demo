@@ -1,0 +1,6 @@
+ipykernel==5.1
+pandas
+BeautifulSoup4
+jupyter
+spacy
+nltk
