@@ -1,6 +1,7 @@
 import urllib 
 from bs4 import BeautifulSoup
 
+test = {'trtestest'}
 
 def extract_cnbc_article_info(url):
     
@@ -35,7 +36,6 @@ def extract_cnbc_article_info(url):
     for group in group_container_list:
         _article_text = group.find('div', attrs={'class': 'group'})
         article_text += _article_text.text
-
 
     return {
         'title': title,
