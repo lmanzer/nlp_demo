@@ -1,5 +1,5 @@
 
-article_url_list = [
+article_urls = [
     'https://www.cnbc.com/2019/03/15/spielberg-and-netflixs-sarandos-meet-sparking-hope-for-oscars-truce.html',
     'https://www.cnbc.com/2019/03/15/tesla-shares-fall-5-percent-after-company-unveils-model-y.html',
     'https://www.cnbc.com/2019/03/15/arizona-will-go-after-big-tech-if-necessary-says-attorney-general.html',
