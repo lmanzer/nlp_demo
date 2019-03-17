@@ -11,12 +11,22 @@ from sklearn.metrics.pairwise import cosine_similarity
 import spacy
 
 # SETTINGS/CONSTANTS
-nlp = spacy.load('en_core_web_lg') # TODO: Give detailed explaination about what this is
+# -------------------
 
+# Load English tokenizer, tagger, parser, NER and word vectors
+# English multi-task CNN trained on OntoNotes, with GloVe vectors trained on Common Crawl. 
+# Assigns word vectors, context-specific token vectors, POS tags, dependency parse and named entities.
+nlp = spacy.load('en_core_web_lg') 
+
+# Stopwords
 stop_words =  nltk.corpus.stopwords.words('english')
 stop_words.remove('more')
 stop_words.remove('against')
 
+# GloVe is an unsupervised learning algorithm for obtaining vector representations for words. 
+# Training is performed on aggregated global word-word co-occurrence statistics from a corpus, and 
+# the resulting representations showcase interesting linear substructures of the word vector space.
+# https://nlp.stanford.edu/projects/glove/
 word_embeddings = {}
 f = open(os.path.join('data', 'models', 'external', 'glove', 'glove.6B.100d.txt'), encoding='utf-8')
 for line in f:
@@ -26,9 +36,12 @@ for line in f:
     word_embeddings[word] = coefs
 f.close()
 
+# Punctuation
 punctuation_table = str.maketrans('', '', string.punctuation)
 
+
 # FUNCTIONS
+# -------------------
 
 def remove_stopwords(sentence):
     word_list = sentence.split()
