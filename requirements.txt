@@ -8,3 +8,5 @@ sklearn
 networkx
 gensim
 pyLDAvis
+python-Levenshtein
+fuzzywuzzy 
