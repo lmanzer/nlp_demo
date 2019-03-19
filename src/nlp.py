@@ -50,7 +50,6 @@ def remove_stopwords(sentence):
 
 
 def lemmatize_words(sentence):
-    # we can probably do better than this! 
     _lemma_words = " ".join([word.lemma_ for word in nlp(sentence)])
     return _lemma_words
     
