@@ -1,3 +1,6 @@
+# nlp_demo
+A small demo project for an NLP Application
+
 1. Install virtualenv 
 2. Install pip packages
 3. python -m nltk.downloader all
