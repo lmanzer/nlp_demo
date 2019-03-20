@@ -23,19 +23,6 @@ stop_words =  nltk.corpus.stopwords.words('english')
 stop_words.remove('more')
 stop_words.remove('against')
 
-# GloVe is an unsupervised learning algorithm for obtaining vector representations for words. 
-# Training is performed on aggregated global word-word co-occurrence statistics from a corpus, and 
-# the resulting representations showcase interesting linear substructures of the word vector space.
-# https://nlp.stanford.edu/projects/glove/
-word_embeddings = {}
-f = open(os.path.join('data', 'models', 'external', 'glove', 'glove.6B.100d.txt'), encoding='utf-8')
-for line in f:
-    values = line.split()
-    word = values[0]
-    coefs = np.asarray(values[1:], dtype='float32')
-    word_embeddings[word] = coefs
-f.close()
-
 # Punctuation
 punctuation_table = str.maketrans('', '', string.punctuation)
 
@@ -65,33 +52,19 @@ def clean_sentence_words(article_sentences):
     return lemmatize_sentences
 
 
-def calculate_sentence_embedding(sentences):
-    empty_vector = np.zeros((100,))
+def calculate_similarity_matrix(article_sentences):
+    similarity_matrix = np.zeros([len(article_sentences), 
+                                len(article_sentences)])
 
-    sentence_vectors = []
-    for sentence in sentences:
-        if len(sentence) > 0:
-            _word_list = sentence.split()
-            _word_vector =  [word_embeddings.get(word, empty_vector) for word in _word_list]
-            _summed_vector = sum(_word_vector)
-            normalized_vector = _summed_vector/ (len(sentence.split()))
-        else:
-            normalized_vector = empty_vector
-        sentence_vectors.append(normalized_vector)
-
-    return sentence_vectors
-
-
-def calculate_similarity_matrix(sentence_vectors, article_sentences):
-    sim_mat = np.zeros([len(article_sentences), len(article_sentences)])
-
-    for i in range(len(article_sentences)):
-        for j in range(len(article_sentences)):
+    similarity_matrix
+    for i, sentence_i in enumerate(article_sentences):
+        nlp_i = nlp(sentence_i)
+        for j, sentence_j in enumerate(article_sentences):
             if i != j:
-                sim_mat[i][j] = cosine_similarity(sentence_vectors[i].reshape(1,100), 
-                                                sentence_vectors[j].reshape(1,100))[0,0]
+                nlp_j = nlp(sentence_j)
+                similarity_matrix[i][j] = nlp_i.similarity(nlp_j)
 
-    return sim_mat
+    return similarity_matrix
 
 
 def generate_summary(article_sentences, similarity_matrix, N_SENTENCES=3):
@@ -109,8 +82,7 @@ def generate_summary(article_sentences, similarity_matrix, N_SENTENCES=3):
 
 def document_summarization(cleaned_sentences, article_sentences):
 
-    sentence_vectors = calculate_sentence_embedding(cleaned_sentences)
-    similarity_matrix = calculate_similarity_matrix(sentence_vectors, article_sentences)
+    similarity_matrix = calculate_similarity_matrix(cleaned_sentences)
     generated_summary = generate_summary(article_sentences, similarity_matrix, N_SENTENCES=3)
 
     return generated_summary
