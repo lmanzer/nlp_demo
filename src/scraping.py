@@ -42,4 +42,5 @@ def extract_cnbc_article_info(url):
         'reporter': reporter_name,
         'summary': summary_list,
         'article': article_text,
+        'url': url,
     }
