@@ -10,3 +10,5 @@ gensim
 pyLDAvis
 python-Levenshtein
 fuzzywuzzy 
+seaborn
+pprint
