@@ -1,7 +1,6 @@
 import urllib 
 from bs4 import BeautifulSoup
 
-test = {'trtestest'}
 
 def extract_cnbc_article_info(url):
     
@@ -41,6 +40,43 @@ def extract_cnbc_article_info(url):
         'title': title,
         'reporter': reporter_name,
         'summary': summary_list,
+        'article': article_text,
+        'url': url,
+    }
+
+
+def extract_cbc_article_info(url):
+   
+    page_html = urllib.request.urlopen(url)
+    souped_html = BeautifulSoup(page_html, 'html.parser')
+    
+    body_html = souped_html.find('body')
+    content_html = body_html.find('main', attrs={'id': 'content'})
+    
+    # Extract Article Title
+    title = content_html.find('h1', attrs={'class': 'detailHeadline'}).text
+    
+    # Extract Reporter Name
+    reporter_name = content_html.find('span', attrs={'class': 'authorText'})
+    if reporter_name is None:
+        byline_text =  content_html.find('div', attrs={'class': 'bylineDetails'}).text
+        reporter_name = byline_text.split(' · ')[0]
+        print(reporter_name)
+
+    # Extract Article Summary
+    summary_html = content_html.find('h2', attrs={'class': 'deck'}) 
+
+    # Extract Article Text
+    article_html = content_html.find('div', attrs={'class': 'story'})
+    group_container_list = article_html.findAll('p')
+    article_text = ""
+    for text in group_container_list:
+        article_text += f' {text.text} .'
+
+    return {
+        'title': title,
+        'reporter': reporter_name,
+        'summary': summary_html.text,
         'article': article_text,
         'url': url,
     }
