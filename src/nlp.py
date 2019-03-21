@@ -120,7 +120,7 @@ def nlp_analysis(article):
     article_text = article['article']
 
     # Clean Article Text
-    cleaned_article_pre = article_text.replace('\n', '.  ')
+    cleaned_article_pre = article_text.replace('\n', ' ')
     cleaned_article = cleaned_article_pre.replace(u'\xa0', u' ')
 
     article_sentences = nltk.tokenize.sent_tokenize(cleaned_article)
