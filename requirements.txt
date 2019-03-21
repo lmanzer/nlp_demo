@@ -12,3 +12,4 @@ python-Levenshtein
 fuzzywuzzy 
 seaborn
 pprint
+tabulate
