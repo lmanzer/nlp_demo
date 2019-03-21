@@ -13,7 +13,7 @@ A demo project for an NLP Application for Financial Services. Scrapes articles f
  
 ## Files:
 
-**NLP_Demo.ipynd** Investigates NLP proccess
-**Article_Recommendation.ipynd** Runs demo of article recommendations
+- **NLP_Demo.ipynd**: Investigates NLP proccess
+- **Article_Recommendation.ipynd**: Runs demo of article recommendations
 
 
