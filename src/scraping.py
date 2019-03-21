@@ -57,11 +57,12 @@ def extract_cbc_article_info(url):
     title = content_html.find('h1', attrs={'class': 'detailHeadline'}).text
     
     # Extract Reporter Name
-    reporter_name = content_html.find('span', attrs={'class': 'authorText'})
-    if reporter_name is None:
+    reporter_name_class = content_html.find('span', attrs={'class': 'authorText'})
+    if reporter_name_class is None:
         byline_text =  content_html.find('div', attrs={'class': 'bylineDetails'}).text
         reporter_name = byline_text.split(' · ')[0]
-        print(reporter_name)
+    else:
+        reporter_name = reporter_name_class.text
 
     # Extract Article Summary
     summary_html = content_html.find('h2', attrs={'class': 'deck'}) 
